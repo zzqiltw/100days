@@ -11,7 +11,7 @@
 #import "ZQPageCollectionViewCell.h"
 #import <Masonry/Masonry.h>
 
-@interface ZQImageBrowserViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ZQImageBrowserViewController ()
 
 @property (nonatomic, strong) NSArray<ZQPageModel *> *pageModels;
 
@@ -38,12 +38,18 @@
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.minimumLineSpacing = 0;
+        flowLayout.minimumInteritemSpacing = 0;
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _collectionView.bounces = NO;
         _collectionView.pagingEnabled = YES;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu"
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+#pragma clang diagnostic pop
         [self.view addSubview:_collectionView];
         
         [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,6 +59,14 @@
     return _collectionView;
 }
 
+@end
+
+@interface ZQImageBrowserViewController(UICollectionView)<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@end
+
+@implementation ZQImageBrowserViewController(UICollectionView)
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.pageModels.count;
@@ -60,7 +74,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(collectionView.bounds.size.width, collectionView.bounds.size.height);
+    return CGSizeMake([UIScreen mainScreen].bounds.size.width, collectionView.bounds.size.height);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
