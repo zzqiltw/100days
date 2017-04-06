@@ -35,8 +35,8 @@
             ZQPageModel *pageModel = [ZQPageModel new];
             
             pageModel.date = [NSDate date];
-            pageModel.title = [NSString stringWithFormat:@"title%ld", i];
-            pageModel.detail = [NSString stringWithFormat:@"detail%ld", i];
+            pageModel.title = @"我们的日子";
+            pageModel.detail = [NSString stringWithFormat:@"渴望之物的来临,\n总是在我们停止渴求它们之后%ld", i];
             pageModel.image = [UIImage imageNamed:@"Background"];
             [tmp addObject:pageModel];
         }

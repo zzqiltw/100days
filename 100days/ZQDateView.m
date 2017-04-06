@@ -8,6 +8,7 @@
 
 #import "ZQDateView.h"
 #import "NSDate+ZQ.h"
+#import "UIFont+ZQ.h"
 #import <Masonry/Masonry.h>
 
 static CGFloat const kZQDataLabelHeight = 32;
@@ -49,7 +50,7 @@ static CGFloat const kZQDataLabelHeight = 32;
     self.borderLayer.frame = self.bounds;
     
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:self.bounds];
-    bezierPath.lineWidth = 2.f;
+    bezierPath.lineWidth = 4.f;
     self.borderLayer.path = bezierPath.CGPath;
 }
 
@@ -73,7 +74,7 @@ static CGFloat const kZQDataLabelHeight = 32;
 {
     if (!_dayLabel) {
         _dayLabel = [[UILabel alloc] init];
-        _dayLabel.font = [UIFont systemFontOfSize:18];
+        _dayLabel.font = [UIFont defaultFontWithSize:36];
         _dayLabel.textAlignment = NSTextAlignmentCenter;
         _dayLabel.textColor = [UIColor whiteColor];
         _dayLabel.backgroundColor = [UIColor clearColor];
@@ -92,7 +93,7 @@ static CGFloat const kZQDataLabelHeight = 32;
 {
     if (!_monthLabel) {
         _monthLabel = [[UILabel alloc] init];
-        _monthLabel.font = [UIFont systemFontOfSize:15];
+        _monthLabel.font = [UIFont defaultFontWithSize:18];
         _monthLabel.textAlignment = NSTextAlignmentCenter;
         _monthLabel.textColor = [UIColor whiteColor];
         _monthLabel.backgroundColor = [UIColor clearColor];
@@ -101,7 +102,7 @@ static CGFloat const kZQDataLabelHeight = 32;
         
         [_monthLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.offset(0);
-            make.top.equalTo(self.dayLabel.mas_bottom).offset(5);
+            make.top.equalTo(self.dayLabel.mas_bottom).offset(0);
         }];
     }
     return _monthLabel;
@@ -111,7 +112,7 @@ static CGFloat const kZQDataLabelHeight = 32;
 {
     if (!_yearLabel) {
         _yearLabel = [[UILabel alloc] init];
-        _yearLabel.font = [UIFont systemFontOfSize:15];
+        _yearLabel.font = [UIFont defaultFontWithSize:15];
         _yearLabel.textColor = [UIColor whiteColor];
         _yearLabel.textAlignment = NSTextAlignmentCenter;
         _yearLabel.backgroundColor = [UIColor clearColor];
@@ -133,7 +134,7 @@ static CGFloat const kZQDataLabelHeight = 32;
         _titleLabel = [[UILabel alloc] init];
         
         _titleLabel.backgroundColor = [UIColor whiteColor];
-        _titleLabel.font = [UIFont systemFontOfSize:15];
+        _titleLabel.font = [UIFont defaultFontWithSize:13];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.textColor = [UIColor blackColor];
         

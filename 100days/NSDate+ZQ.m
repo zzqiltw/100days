@@ -35,40 +35,40 @@
 {
     switch (self.month) {
         case 1:
-            return @"Jan.";
+            return @"Jan";
             break;
         case 2:
-            return @"Feb.";
+            return @"Feb";
             break;
         case 3:
-            return @"Mar.";
+            return @"Mar";
             break;
         case 4:
-            return @"Apr.";
+            return @"Apr";
             break;
         case 5:
-            return @"May.";
+            return @"May";
             break;
         case 6:
-            return @"Jun.";
+            return @"Jun";
             break;
         case 7:
-            return @"Jul.";
+            return @"Jul";
             break;
         case 8:
-            return @"Aug.";
+            return @"Aug";
             break;
         case 9:
-            return @"Sept.";
+            return @"Sept";
             break;
         case 10:
-            return @"Oct.";
+            return @"Oct";
             break;
         case 11:
-            return @"Nov.";
+            return @"Nov";
             break;
         case 12:
-            return @"Dec.";
+            return @"Dec";
             break;
             
         default:

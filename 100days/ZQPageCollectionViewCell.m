@@ -54,19 +54,26 @@ static CGFloat const kZQPageImageViewWH = 140;
 {
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
+    self.dateView.alpha = 0.f;
     
     self.titleLabel.transform = CGAffineTransformMakeTranslation(-WIDTH_SCREEN, 0);
     self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN, 0);
     
-    [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.titleLabel.alpha = 1.f;
-        self.titleLabel.transform = CGAffineTransformIdentity;
+    CGFloat duration = 0.6;
+    
+    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.dateView.alpha = 1.f;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.detailLabel.alpha = 1.f;
-            self.detailLabel.transform = CGAffineTransformIdentity;
+        [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.titleLabel.alpha = 1.f;
+            self.titleLabel.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
-            
+            [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.detailLabel.alpha = 1.f;
+                self.detailLabel.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished) {
+                
+            }];
         }];
     }];
 }
@@ -75,8 +82,8 @@ static CGFloat const kZQPageImageViewWH = 140;
 {
     self.titleLabel.text = pageModel.title;
     self.detailLabel.text = pageModel.detail;
-//    self.bgImageView.image = [pageModel.image stackBlur:70];
-    self.bgImageView.image = pageModel.image;
+    self.bgImageView.image = [pageModel.image stackBlur:70];
+//    self.bgImageView.image = pageModel.image;
 //    self.visiableImageView.image = pageModel.image;
     self.dateView.date = pageModel.date;
     self.dateView.title = pageModel.title;
@@ -178,10 +185,14 @@ static CGFloat const kZQPageImageViewWH = 140;
         [self.contentView addSubview:_dateView];
         
         [_dateView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.offset(0);
+//            make.centerX.offset(0);
+//            make.centerY.offset(0);
+            
+            
             make.centerY.offset(0);
-            make.width.equalTo(@50);
-            make.height.equalTo(@96);
+            make.right.offset(-10);
+            make.width.equalTo(@(0.2*WIDTH_SCREEN));
+            make.height.equalTo(@(0.2*HEIGHT_SCREEN));
         }];
     }
     return _dateView;
