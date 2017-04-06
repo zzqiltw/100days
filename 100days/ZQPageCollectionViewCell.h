@@ -12,4 +12,6 @@
 
 - (void)bindData:(ZQPageModel *)pageModel;
 
+- (void)showAnimation;
+
 @end

@@ -41,6 +41,19 @@ static CGFloat const kZQPageImageViewWH = 140;
     return self;
 }
 
+- (void)showAnimation
+{
+    self.titleLabel.alpha = 0.f;
+    self.detailLabel.alpha = 0.f;
+    
+    [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.titleLabel.alpha = 1.f;
+        self.detailLabel.alpha = 1.f;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 - (void)bindData:(ZQPageModel *)pageModel
 {
     self.titleLabel.text = pageModel.title;

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ZQPageModel.h"
+
+
 @interface ZQImageBrowserViewController : UIViewController
 
-- (instancetype)initWithPageModels:(NSArray<ZQPageModel *> *)pageModels;
+@property (nonatomic, assign) NSInteger currentPageIndex;
+@property (nonatomic, strong) NSArray<ZQPageModel *> *pageModels;
 
 @end

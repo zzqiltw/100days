@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "ZQImageBrowserViewController.h"
+#import "ZQPageListViewController.h"
+#import "ZQPageDataSet.h"
 
 @interface AppDelegate ()
 
@@ -20,17 +21,13 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    NSMutableArray *tmp = [NSMutableArray array];
-    for (NSInteger i = 0; i < 5; ++i) {
-        ZQPageModel *pageModel = [ZQPageModel new];
-        pageModel.title = [NSString stringWithFormat:@"title%ld", i];
-        pageModel.detail = [NSString stringWithFormat:@"detail%ld", i];
-        pageModel.image = [UIImage imageNamed:@"Background"];
-        [tmp addObject:pageModel];
-    }
     
-    ZQImageBrowserViewController *controller = [[ZQImageBrowserViewController alloc] initWithPageModels:[tmp copy]];
-    self.window.rootViewController = controller;
+    ZQPageListViewController *controller = [[ZQPageListViewController alloc] init];
+    controller.pageModels = [[ZQPageDataSet shareDataSet] pageModels];
+    
+    UINavigationController *navigationControoler = [[UINavigationController alloc] initWithRootViewController:controller];
+ 
+    self.window.rootViewController = navigationControoler;
     
     [self.window makeKeyAndVisible];
     

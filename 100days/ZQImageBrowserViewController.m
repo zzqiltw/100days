@@ -11,9 +11,8 @@
 #import "ZQPageCollectionViewCell.h"
 #import <Masonry/Masonry.h>
 
-@interface ZQImageBrowserViewController ()
+@interface ZQImageBrowserViewController ()<UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSArray<ZQPageModel *> *pageModels;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -21,17 +20,27 @@
 
 @implementation ZQImageBrowserViewController
 
-- (instancetype)initWithPageModels:(NSArray<ZQPageModel *> *)pageModels {
-    if (self = [super init]) {
-        self.pageModels = pageModels;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.collectionView registerClass:ZQPageCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class)];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)setCurrentPageIndex:(NSInteger)currentPageIndex
+{
+    if (_currentPageIndex != currentPageIndex) {
+        _currentPageIndex = currentPageIndex;
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
+        
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    }
 }
 
 - (UICollectionView *)collectionView
@@ -45,11 +54,8 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.bounces = NO;
         _collectionView.pagingEnabled = YES;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wgnu"
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-#pragma clang diagnostic pop
         [self.view addSubview:_collectionView];
         
         [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,14 +64,6 @@
     }
     return _collectionView;
 }
-
-@end
-
-@interface ZQImageBrowserViewController(UICollectionView)<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-
-@end
-
-@implementation ZQImageBrowserViewController(UICollectionView)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -88,4 +86,8 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [(ZQPageCollectionViewCell *)cell showAnimation];
+}
 @end
