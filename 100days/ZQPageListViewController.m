@@ -47,19 +47,15 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.imageBrowserViewController.pageModels = self.pageModels;
+    ZQImageBrowserViewController *imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
     
-    self.imageBrowserViewController.currentPageIndex = indexPath.row;
+    imageBrowserViewController.pageModels = self.pageModels;
     
-    [self.navigationController pushViewController:self.imageBrowserViewController animated:YES];
-}
-
-- (ZQImageBrowserViewController *)imageBrowserViewController
-{
-    if (!_imageBrowserViewController) {
-        _imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
-    }
-    return _imageBrowserViewController;
+    imageBrowserViewController.currentPageIndex = indexPath.row;
+    
+    [self presentViewController:imageBrowserViewController animated:YES completion:^{
+        
+    }];
 }
 
 - (UITableView *)listTableView

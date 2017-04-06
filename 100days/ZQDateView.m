@@ -10,7 +10,7 @@
 #import "NSDate+ZQ.h"
 #import <Masonry/Masonry.h>
 
-static CGFloat const kZQDataLabelHeight = 20;
+static CGFloat const kZQDataLabelHeight = 32;
 
 @interface ZQDateView()
 

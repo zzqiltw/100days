@@ -22,9 +22,10 @@ static CGFloat const kZQPageImageViewWH = 140;
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UIImageView *bgImageView;
 
-@property (nonatomic, strong) UIImageView *visiableImageView;
+//@property (nonatomic, strong) UIImageView *visiableImageView;
 
 @property (nonatomic, strong) ZQDateView *dateView;
+
 
 @end
 
@@ -39,7 +40,7 @@ static CGFloat const kZQPageImageViewWH = 140;
         
         [self detailLabel];
         
-        [self visiableImageView];
+//        [self visiableImageView];
         
         [self dateView];
         
@@ -51,20 +52,11 @@ static CGFloat const kZQPageImageViewWH = 140;
 
 - (void)showAnimation
 {
-//    self.titleLabel.alpha = 0.f;
-//    self.detailLabel.alpha = 0.f;
-//    
-//    [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        self.titleLabel.alpha = 1.f;
-//        self.detailLabel.alpha = 1.f;
-//    } completion:^(BOOL finished) {
-//        
-//    }];
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
     
-    self.titleLabel.transform = CGAffineTransformMakeTranslation(-10, 0);
-    self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN + 10, 0);
+    self.titleLabel.transform = CGAffineTransformMakeTranslation(-WIDTH_SCREEN, 0);
+    self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN, 0);
     
     [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.titleLabel.alpha = 1.f;
@@ -83,8 +75,9 @@ static CGFloat const kZQPageImageViewWH = 140;
 {
     self.titleLabel.text = pageModel.title;
     self.detailLabel.text = pageModel.detail;
-    self.bgImageView.image = [pageModel.image stackBlur:70];
-    self.visiableImageView.image = pageModel.image;
+//    self.bgImageView.image = [pageModel.image stackBlur:70];
+    self.bgImageView.image = pageModel.image;
+//    self.visiableImageView.image = pageModel.image;
     self.dateView.date = pageModel.date;
     self.dateView.title = pageModel.title;
 }
@@ -94,7 +87,6 @@ static CGFloat const kZQPageImageViewWH = 140;
     if (!_titleLabel) {
         _titleLabel = [UILabel new];
         
-//        _titleLabel.textColor = [UIColor redColor];
         _titleLabel.font = [UIFont systemFontOfSize:15];
         
         [self.contentView addSubview:_titleLabel];
@@ -102,7 +94,7 @@ static CGFloat const kZQPageImageViewWH = 140;
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.offset(0);
             
-            make.top.equalTo(self.visiableImageView.mas_bottom).offset(30);
+            make.bottom.offset(-80);
         }];
     }
     return _titleLabel;
@@ -113,7 +105,6 @@ static CGFloat const kZQPageImageViewWH = 140;
     if (!_detailLabel) {
         _detailLabel = [UILabel new];
         
-//        _detailLabel.textColor = [UIColor redColor];
         _detailLabel.font = [UIFont systemFontOfSize:16];
         
         [self.contentView addSubview:_detailLabel];
@@ -132,6 +123,21 @@ static CGFloat const kZQPageImageViewWH = 140;
     if (!_bgImageView) {
         _bgImageView = [UIImageView new];
         
+//        CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+//        
+//        CGFloat shortHeight = 0.56 * HEIGHT_SCREEN;
+//        CGFloat longHeight = 0.68 * HEIGHT_SCREEN;
+//        
+//        UIBezierPath *path = [UIBezierPath bezierPath];
+//        [path moveToPoint:CGPointZero];
+//        [path addLineToPoint:CGPointMake(0, longHeight)];
+//        [path addLineToPoint:CGPointMake(WIDTH_SCREEN, shortHeight)];
+//        [path addLineToPoint:CGPointMake(WIDTH_SCREEN, 0)];
+//        [path closePath];
+//        shapeLayer.path = path.CGPath;
+//        
+//        _bgImageView.layer.mask = shapeLayer;
+        
         [self.contentView insertSubview:_bgImageView atIndex:0];
         
         [_bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -140,29 +146,29 @@ static CGFloat const kZQPageImageViewWH = 140;
     }
     return _bgImageView;
 }
-
-- (UIImageView *)visiableImageView
-{
-    if (!_visiableImageView) {
-        _visiableImageView = [[UIImageView alloc] init];
-        
-        _visiableImageView.layer.borderWidth = 2.f;
-        _visiableImageView.layer.masksToBounds = YES;
-        _visiableImageView.layer.cornerRadius = kZQPageImageViewWH * 0.5;
-        _visiableImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        
-        [self.contentView addSubview:_visiableImageView];
-        
-        [_visiableImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.offset(100);
-            
-            make.centerX.offset(0);
-            
-            make.width.height.equalTo(@(kZQPageImageViewWH));
-        }];
-    }
-    return _visiableImageView;
-}
+//
+//- (UIImageView *)visiableImageView
+//{
+//    if (!_visiableImageView) {
+//        _visiableImageView = [[UIImageView alloc] init];
+//        
+//        _visiableImageView.layer.borderWidth = 2.f;
+//        _visiableImageView.layer.masksToBounds = YES;
+//        _visiableImageView.layer.cornerRadius = kZQPageImageViewWH * 0.5;
+//        _visiableImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+//        
+//        [self.contentView addSubview:_visiableImageView];
+//        
+//        [_visiableImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.offset(100);
+//            
+//            make.centerX.offset(0);
+//            
+//            make.width.height.equalTo(@(kZQPageImageViewWH));
+//        }];
+//    }
+//    return _visiableImageView;
+//}
 
 - (ZQDateView *)dateView
 {
@@ -172,8 +178,8 @@ static CGFloat const kZQPageImageViewWH = 140;
         [self.contentView addSubview:_dateView];
         
         [_dateView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.offset(10);
-            make.top.offset(80);
+            make.centerX.offset(0);
+            make.centerY.offset(0);
             make.width.equalTo(@50);
             make.height.equalTo(@96);
         }];

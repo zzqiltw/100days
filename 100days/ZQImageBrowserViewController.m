@@ -23,13 +23,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.modalTransitionStyle = UIModalPresentationCustom;
+    self.transitioningDelegate = self;
+    
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
     [self.collectionView registerClass:ZQPageCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class)];
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
-    self.extendedLayoutIncludesOpaqueBars = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.collectionView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)]];
+}
+
+- (void)onPanGesture:(UIGestureRecognizer *)panGesture
+{
+    if (panGesture.state == UIGestureRecognizerStateRecognized) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)setCurrentPageIndex:(NSInteger)currentPageIndex
@@ -89,5 +99,70 @@
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [(ZQPageCollectionViewCell *)cell showAnimation];
+}
+
+#pragma mark - 转场
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                   presentingController:(UIViewController *)presenting
+                                                                       sourceController:(UIViewController *)source
+{
+    return self;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    return self;
+}
+
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
+{
+    return UINavigationControllerHideShowBarDuration * 2;
+//    return 1.5;
+}
+
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
+{
+    ZQImageBrowserViewController *from = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    ZQImageBrowserViewController *to = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+    UIView *containerView = [transitionContext containerView];
+    containerView.backgroundColor = [UIColor whiteColor];
+    if ([to isKindOfClass:[ZQImageBrowserViewController class]]) {     // presenting
+        to.view.frame = containerView.bounds;
+        to.view.alpha = 0.1f;
+        [containerView addSubview:to.view];
+        
+        to.view.transform = CGAffineTransformMakeScale(0.8, 0.8);
+
+        [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             to.view.alpha = 1.f;
+                             to.view.transform = CGAffineTransformIdentity;
+                         }
+                         completion:^(BOOL finished) {
+                             [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+                             
+                         }];
+    } else if ([from isKindOfClass:[ZQImageBrowserViewController class]]) { // dismissing
+        
+        UIView *snapShot = [to.view snapshotViewAfterScreenUpdates:YES];
+        snapShot.frame = containerView.bounds;
+        [containerView insertSubview:snapShot belowSubview:from.view];
+        
+        from.view.alpha = 1.f;
+
+        [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             from.view.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                             from.view.alpha = 0.1f;
+                         }
+                         completion:^(BOOL finished) {
+                             [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+                         }];
+    }
 }
 @end
