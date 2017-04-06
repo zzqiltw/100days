@@ -74,7 +74,7 @@ static CGFloat const kZQDataLabelHeight = 32;
 {
     if (!_dayLabel) {
         _dayLabel = [[UILabel alloc] init];
-        _dayLabel.font = [UIFont defaultFontWithSize:36];
+        _dayLabel.font = [UIFont defaultFontWithSize:40];
         _dayLabel.textAlignment = NSTextAlignmentCenter;
         _dayLabel.textColor = [UIColor whiteColor];
         _dayLabel.backgroundColor = [UIColor clearColor];
@@ -120,9 +120,9 @@ static CGFloat const kZQDataLabelHeight = 32;
         [self addSubview:_yearLabel];
         
         [_yearLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.monthLabel.mas_bottom).offset(5);
+            make.top.equalTo(self.monthLabel.mas_bottom).offset(10);
             make.left.right.offset(0);
-            make.bottom.equalTo(self.titleLabel.mas_top).offset(-5);
+            make.bottom.equalTo(self.titleLabel.mas_top).offset(-10);
         }];
     }
     return _yearLabel;
@@ -134,7 +134,7 @@ static CGFloat const kZQDataLabelHeight = 32;
         _titleLabel = [[UILabel alloc] init];
         
         _titleLabel.backgroundColor = [UIColor whiteColor];
-        _titleLabel.font = [UIFont defaultFontWithSize:13];
+        _titleLabel.font = [UIFont defaultFontWithSize:12];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.textColor = [UIColor blackColor];
         

@@ -12,7 +12,7 @@
 #import "UIFont+ZQ.h"
 #import <Masonry/Masonry.h>
 
-static CGFloat const kZQPageImageViewWH = 140;
+//static CGFloat const kZQPageImageViewWH = 140;
 
 #define WIDTH_SCREEN ([UIScreen mainScreen].bounds.size.width)
 #define HEIGHT_SCREEN ([UIScreen mainScreen].bounds.size.height)
@@ -82,12 +82,31 @@ static CGFloat const kZQPageImageViewWH = 140;
 - (void)bindData:(ZQPageModel *)pageModel
 {
     self.titleLabel.text = pageModel.title;
-    self.detailLabel.text = pageModel.detail;
+//    self.detailLabel.text = pageModel.detail;
+    
+    self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:pageModel.detail
+                                                                      attributes:[self attributesForLabel:self.detailLabel]];
     self.bgImageView.image = [pageModel.image stackBlur:70];
 //    self.bgImageView.image = pageModel.image;
 //    self.visiableImageView.image = pageModel.image;
     self.dateView.date = pageModel.date;
     self.dateView.title = pageModel.title;
+}
+
+- (NSDictionary *)attributesForLabel:(UILabel *)label
+{
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    
+    attributes[NSFontAttributeName] = label.font ? : [UIFont defaultFontWithSize:15];
+    attributes[NSForegroundColorAttributeName] = label.textColor ? : [UIColor whiteColor];
+    
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineSpacing = 6;
+    style.alignment = NSTextAlignmentCenter;
+    
+    attributes[NSParagraphStyleAttributeName] = style;
+    
+    return [attributes copy];
 }
 
 - (UILabel *)titleLabel
