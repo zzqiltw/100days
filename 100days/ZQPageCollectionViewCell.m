@@ -9,6 +9,7 @@
 #import "ZQPageCollectionViewCell.h"
 #import "UIImage+ZQ.h"
 #import "ZQDateView.h"
+#import "UIFont+ZQ.h"
 #import <Masonry/Masonry.h>
 
 static CGFloat const kZQPageImageViewWH = 140;
@@ -94,7 +95,9 @@ static CGFloat const kZQPageImageViewWH = 140;
     if (!_titleLabel) {
         _titleLabel = [UILabel new];
         
-        _titleLabel.font = [UIFont systemFontOfSize:15];
+        _titleLabel.font = [UIFont defaultFontWithSize:15];
+        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self.contentView addSubview:_titleLabel];
         
@@ -112,14 +115,18 @@ static CGFloat const kZQPageImageViewWH = 140;
     if (!_detailLabel) {
         _detailLabel = [UILabel new];
         
-        _detailLabel.font = [UIFont systemFontOfSize:16];
+        _detailLabel.font = [UIFont defaultFontWithSize:16];
+        _detailLabel.textAlignment = NSTextAlignmentCenter;
+        _detailLabel.textColor = [UIColor whiteColor];
+        
+        _detailLabel.numberOfLines = 0;
         
         [self.contentView addSubview:_detailLabel];
         
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.offset(0);
             
-            make.top.equalTo(self.titleLabel.mas_bottom).offset(30);
+            make.top.equalTo(self.titleLabel.mas_bottom).offset(10);
         }];
     }
     return _detailLabel;

@@ -36,7 +36,7 @@
             
             pageModel.date = [NSDate date];
             pageModel.title = @"我们的日子";
-            pageModel.detail = [NSString stringWithFormat:@"渴望之物的来临,\n总是在我们停止渴求它们之后%ld", i];
+            pageModel.detail = @"渴望之物的来临,\n总是在我们停止渴求它们之后";
             pageModel.image = [UIImage imageNamed:@"Background"];
             [tmp addObject:pageModel];
         }
