@@ -12,7 +12,9 @@
 
 @interface ZQImageBrowserViewController : UIViewController
 
-@property (nonatomic, assign) NSInteger currentPageIndex;
-@property (nonatomic, strong) NSArray<ZQPageModel *> *pageModels;
+//@property (nonatomic, assign) NSInteger currentPageIndex;
+//@property (nonatomic, strong) NSArray<ZQPageModel *> *pageModels;
+
+@property (nonatomic, strong) ZQPageModel *pageModel;
 
 @end

@@ -20,6 +20,7 @@
 		99A700611E965DAD0065FBFE /* HYFangSongJ.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99A700601E965DAD0065FBFE /* HYFangSongJ.ttf */; };
 		99A700641E965E8A0065FBFE /* UIFont+ZQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A700631E965E8A0065FBFE /* UIFont+ZQ.m */; };
 		99A700661E965F7B0065FBFE /* HYCuFangSongJ.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99A700651E965F7B0065FBFE /* HYCuFangSongJ.ttf */; };
+		99A700691E966B000065FBFE /* ZQPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A700681E966B000065FBFE /* ZQPageView.m */; };
 		99AD33A51E8E4DF100044B3B /* ZQPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33A41E8E4DF100044B3B /* ZQPageModel.m */; };
 		99AD33A81E8E51CE00044B3B /* ZQImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33A71E8E51CE00044B3B /* ZQImageBrowserViewController.m */; };
 		99AD33AB1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33AA1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m */; };
@@ -70,6 +71,8 @@
 		99A700621E965E8A0065FBFE /* UIFont+ZQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+ZQ.h"; sourceTree = "<group>"; };
 		99A700631E965E8A0065FBFE /* UIFont+ZQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ZQ.m"; sourceTree = "<group>"; };
 		99A700651E965F7B0065FBFE /* HYCuFangSongJ.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HYCuFangSongJ.ttf; sourceTree = "<group>"; };
+		99A700671E966B000065FBFE /* ZQPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageView.h; sourceTree = "<group>"; };
+		99A700681E966B000065FBFE /* ZQPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageView.m; sourceTree = "<group>"; };
 		99AD33A31E8E4DF100044B3B /* ZQPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageModel.h; sourceTree = "<group>"; };
 		99AD33A41E8E4DF100044B3B /* ZQPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageModel.m; sourceTree = "<group>"; };
 		99AD33A61E8E51CE00044B3B /* ZQImageBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageBrowserViewController.h; sourceTree = "<group>"; };
@@ -161,6 +164,8 @@
 				99AD33A41E8E4DF100044B3B /* ZQPageModel.m */,
 				99AD33A91E8E5E7C00044B3B /* ZQPageCollectionViewCell.h */,
 				99AD33AA1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m */,
+				99A700671E966B000065FBFE /* ZQPageView.h */,
+				99A700681E966B000065FBFE /* ZQPageView.m */,
 				99A700571E961D440065FBFE /* ZQDateView.h */,
 				99A700581E961D440065FBFE /* ZQDateView.m */,
 				99AD33AC1E8E6A6900044B3B /* UIImage+ZQ.h */,
@@ -394,6 +399,7 @@
 				9958C6651E8D470E00F1F04E /* AppDelegate.m in Sources */,
 				9958C6621E8D470E00F1F04E /* main.m in Sources */,
 				99AD33A51E8E4DF100044B3B /* ZQPageModel.m in Sources */,
+				99A700691E966B000065FBFE /* ZQPageView.m in Sources */,
 				99AD33AB1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m in Sources */,
 				99A700641E965E8A0065FBFE /* UIFont+ZQ.m in Sources */,
 				99A7005F1E9622D70065FBFE /* NSDate+ZQ.m in Sources */,

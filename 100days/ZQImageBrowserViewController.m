@@ -8,13 +8,12 @@
 
 #import "ZQImageBrowserViewController.h"
 #import "ZQPageModel.h"
-#import "ZQPageCollectionViewCell.h"
+#import "ZQPageView.h"
 #import <Masonry/Masonry.h>
 
-@interface ZQImageBrowserViewController ()<UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ZQImageBrowserViewController ()<UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
 
-
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) ZQPageView *pageView;
 
 @end
 
@@ -26,11 +25,11 @@
     self.modalTransitionStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
     
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.pageView bindData:self.pageModel];
+
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.collectionView registerClass:ZQPageCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class)];
-    
-    [self.collectionView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)]];
+    [self.pageView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)]];
 }
 
 - (void)onPanGesture:(UIGestureRecognizer *)panGesture
@@ -42,64 +41,85 @@
     }
 }
 
-- (void)setCurrentPageIndex:(NSInteger)currentPageIndex
+- (ZQPageView *)pageView
 {
-    if (_currentPageIndex != currentPageIndex) {
-        _currentPageIndex = currentPageIndex;
+    if (!_pageView) {
+        _pageView = [[ZQPageView alloc] init];
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
+        [self.view addSubview:_pageView];
         
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    }
-}
-
-- (UICollectionView *)collectionView
-{
-    if (!_collectionView) {
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.minimumLineSpacing = 0;
-        flowLayout.minimumInteritemSpacing = 0;
-        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-        _collectionView.bounces = NO;
-        _collectionView.pagingEnabled = YES;
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        [self.view addSubview:_collectionView];
-        
-        [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.top.offset(0);
+        [_pageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.bottom.offset(0);
         }];
     }
-    return _collectionView;
+    return _pageView;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.pageModels.count;
-}
+//- (void)setCurrentPageIndex:(NSInteger)currentPageIndex
+//{
+//    if (_currentPageIndex != currentPageIndex) {
+//        _currentPageIndex = currentPageIndex;
+//        
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
+//        
+//        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+//    }
+//}
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width, collectionView.bounds.size.height);
-}
+//- (UICollectionView *)collectionView
+//{
+//    if (!_collectionView) {
+//        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+//        flowLayout.minimumLineSpacing = 0;
+//        flowLayout.minimumInteritemSpacing = 0;
+//        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+//        
+//        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+//        _collectionView.bounces = NO;
+//        _collectionView.pagingEnabled = YES;
+//        _collectionView.delegate = self;
+//        _collectionView.dataSource = self;
+//        [self.view addSubview:_collectionView];
+//        
+//        [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.bottom.top.offset(0);
+//        }];
+//    }
+//    return _collectionView;
+//}
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+//{
+//    return self.pageModels.count;
+//}
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return CGSizeMake([UIScreen mainScreen].bounds.size.width, collectionView.bounds.size.height);
+//}
+
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    ZQPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class) forIndexPath:indexPath];
+// 
+//    if (indexPath.row < self.pageModels.count) {
+//        [cell bindData:self.pageModels[indexPath.row]];
+//    }
+//    
+//    return cell;
+//}
+
+- (void)viewWillAppear:(BOOL)animated
 {
-    ZQPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class) forIndexPath:indexPath];
- 
-    if (indexPath.row < self.pageModels.count) {
-        [cell bindData:self.pageModels[indexPath.row]];
-    }
+    [super viewWillAppear:animated];
     
-    return cell;
+    [self.pageView showAnimation];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [(ZQPageCollectionViewCell *)cell showAnimation];
-}
+//- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [(ZQPageCollectionViewCell *)cell showAnimation];
+//}
 
 #pragma mark - 转场
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented

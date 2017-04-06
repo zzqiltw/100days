@@ -26,20 +26,20 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
     
     [self.listTableView registerClass:UITableViewCell.class forCellReuseIdentifier:kZQPageListCellIdentifier];
     
-    NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        NSString *str1 = (NSString *)obj1;
-        NSString *str2 = (NSString *)obj2;
-        return [str1 compare:str2];
-    }];
-    for(NSString *fontfamilyname in fontArrays)
-    {
-        NSLog(@"family:'%@'",fontfamilyname);
-        for(NSString *fontName in [UIFont fontNamesForFamilyName:fontfamilyname])
-        {
-            NSLog(@"\tfont:'%@'",fontName);
-        }
-        NSLog(@"-------------");
-    }
+//    NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+//        NSString *str1 = (NSString *)obj1;
+//        NSString *str2 = (NSString *)obj2;
+//        return [str1 compare:str2];
+//    }];
+//    for(NSString *fontfamilyname in fontArrays)
+//    {
+//        NSLog(@"family:'%@'",fontfamilyname);
+//        for(NSString *fontName in [UIFont fontNamesForFamilyName:fontfamilyname])
+//        {
+//            NSLog(@"\tfont:'%@'",fontName);
+//        }
+//        NSLog(@"-------------");
+//    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -64,9 +64,7 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 {
     ZQImageBrowserViewController *imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
     
-    imageBrowserViewController.pageModels = self.pageModels;
-    
-    imageBrowserViewController.currentPageIndex = indexPath.row;
+    imageBrowserViewController.pageModel = self.pageModels[indexPath.row];
     
     [self presentViewController:imageBrowserViewController animated:YES completion:^{
         
