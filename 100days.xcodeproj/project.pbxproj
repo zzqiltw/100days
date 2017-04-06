@@ -15,6 +15,8 @@
 		9958C6861E8D470F00F1F04E /* _00daysUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9958C6851E8D470F00F1F04E /* _00daysUITests.m */; };
 		996C568B1E9499500006EA05 /* ZQPageDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C568A1E9499500006EA05 /* ZQPageDataSet.m */; };
 		996C568E1E94BDF00006EA05 /* ZQPageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C568D1E94BDF00006EA05 /* ZQPageListViewController.m */; };
+		99A700591E961D440065FBFE /* ZQDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A700581E961D440065FBFE /* ZQDateView.m */; };
+		99A7005F1E9622D70065FBFE /* NSDate+ZQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7005E1E9622D70065FBFE /* NSDate+ZQ.m */; };
 		99AD33A51E8E4DF100044B3B /* ZQPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33A41E8E4DF100044B3B /* ZQPageModel.m */; };
 		99AD33A81E8E51CE00044B3B /* ZQImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33A71E8E51CE00044B3B /* ZQImageBrowserViewController.m */; };
 		99AD33AB1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AD33AA1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m */; };
@@ -57,6 +59,10 @@
 		996C568A1E9499500006EA05 /* ZQPageDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageDataSet.m; sourceTree = "<group>"; };
 		996C568C1E94BDF00006EA05 /* ZQPageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageListViewController.h; sourceTree = "<group>"; };
 		996C568D1E94BDF00006EA05 /* ZQPageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageListViewController.m; sourceTree = "<group>"; };
+		99A700571E961D440065FBFE /* ZQDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQDateView.h; sourceTree = "<group>"; };
+		99A700581E961D440065FBFE /* ZQDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQDateView.m; sourceTree = "<group>"; };
+		99A7005D1E9622D70065FBFE /* NSDate+ZQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ZQ.h"; sourceTree = "<group>"; };
+		99A7005E1E9622D70065FBFE /* NSDate+ZQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ZQ.m"; sourceTree = "<group>"; };
 		99AD33A31E8E4DF100044B3B /* ZQPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageModel.h; sourceTree = "<group>"; };
 		99AD33A41E8E4DF100044B3B /* ZQPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageModel.m; sourceTree = "<group>"; };
 		99AD33A61E8E51CE00044B3B /* ZQImageBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQImageBrowserViewController.h; sourceTree = "<group>"; };
@@ -148,8 +154,12 @@
 				99AD33A41E8E4DF100044B3B /* ZQPageModel.m */,
 				99AD33A91E8E5E7C00044B3B /* ZQPageCollectionViewCell.h */,
 				99AD33AA1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m */,
+				99A700571E961D440065FBFE /* ZQDateView.h */,
+				99A700581E961D440065FBFE /* ZQDateView.m */,
 				99AD33AC1E8E6A6900044B3B /* UIImage+ZQ.h */,
 				99AD33AD1E8E6A6900044B3B /* UIImage+ZQ.m */,
+				99A7005D1E9622D70065FBFE /* NSDate+ZQ.h */,
+				99A7005E1E9622D70065FBFE /* NSDate+ZQ.m */,
 				9958C66C1E8D470E00F1F04E /* Assets.xcassets */,
 				9958C6711E8D470E00F1F04E /* Info.plist */,
 				9958C6601E8D470E00F1F04E /* Supporting Files */,
@@ -372,6 +382,8 @@
 				9958C6621E8D470E00F1F04E /* main.m in Sources */,
 				99AD33A51E8E4DF100044B3B /* ZQPageModel.m in Sources */,
 				99AD33AB1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m in Sources */,
+				99A7005F1E9622D70065FBFE /* NSDate+ZQ.m in Sources */,
+				99A700591E961D440065FBFE /* ZQDateView.m in Sources */,
 				99AD33A81E8E51CE00044B3B /* ZQImageBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

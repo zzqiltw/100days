@@ -8,9 +8,13 @@
 
 #import "ZQPageCollectionViewCell.h"
 #import "UIImage+ZQ.h"
+#import "ZQDateView.h"
 #import <Masonry/Masonry.h>
 
 static CGFloat const kZQPageImageViewWH = 140;
+
+#define WIDTH_SCREEN ([UIScreen mainScreen].bounds.size.width)
+#define HEIGHT_SCREEN ([UIScreen mainScreen].bounds.size.height)
 
 @interface ZQPageCollectionViewCell()
 
@@ -19,6 +23,8 @@ static CGFloat const kZQPageImageViewWH = 140;
 @property (nonatomic, strong) UIImageView *bgImageView;
 
 @property (nonatomic, strong) UIImageView *visiableImageView;
+
+@property (nonatomic, strong) ZQDateView *dateView;
 
 @end
 
@@ -35,6 +41,8 @@ static CGFloat const kZQPageImageViewWH = 140;
         
         [self visiableImageView];
         
+        [self dateView];
+        
         self.layer.shouldRasterize = YES;
         self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     }
@@ -43,14 +51,31 @@ static CGFloat const kZQPageImageViewWH = 140;
 
 - (void)showAnimation
 {
+//    self.titleLabel.alpha = 0.f;
+//    self.detailLabel.alpha = 0.f;
+//    
+//    [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        self.titleLabel.alpha = 1.f;
+//        self.detailLabel.alpha = 1.f;
+//    } completion:^(BOOL finished) {
+//        
+//    }];
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
     
+    self.titleLabel.transform = CGAffineTransformMakeTranslation(-10, 0);
+    self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN + 10, 0);
+    
     [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.titleLabel.alpha = 1.f;
-        self.detailLabel.alpha = 1.f;
+        self.titleLabel.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
-        
+        [UIView animateWithDuration:1.6 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.detailLabel.alpha = 1.f;
+            self.detailLabel.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            
+        }];
     }];
 }
 
@@ -60,6 +85,8 @@ static CGFloat const kZQPageImageViewWH = 140;
     self.detailLabel.text = pageModel.detail;
     self.bgImageView.image = [pageModel.image stackBlur:70];
     self.visiableImageView.image = pageModel.image;
+    self.dateView.date = pageModel.date;
+    self.dateView.title = pageModel.title;
 }
 
 - (UILabel *)titleLabel
@@ -135,5 +162,22 @@ static CGFloat const kZQPageImageViewWH = 140;
         }];
     }
     return _visiableImageView;
+}
+
+- (ZQDateView *)dateView
+{
+    if (!_dateView) {
+        _dateView = [[ZQDateView alloc] init];
+        
+        [self.contentView addSubview:_dateView];
+        
+        [_dateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.offset(10);
+            make.top.offset(80);
+            make.width.equalTo(@50);
+            make.height.equalTo(@96);
+        }];
+    }
+    return _dateView;
 }
 @end

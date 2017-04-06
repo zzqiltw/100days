@@ -10,6 +10,7 @@
 
 @interface ZQPageModel : NSObject
 
+@property (nonatomic, strong) NSDate *date;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *detail;
 

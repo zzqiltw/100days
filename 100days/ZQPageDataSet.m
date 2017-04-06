@@ -33,6 +33,8 @@
         NSMutableArray *tmp = [NSMutableArray array];
         for (NSInteger i = 0; i < 5; ++i) {
             ZQPageModel *pageModel = [ZQPageModel new];
+            
+            pageModel.date = [NSDate date];
             pageModel.title = [NSString stringWithFormat:@"title%ld", i];
             pageModel.detail = [NSString stringWithFormat:@"detail%ld", i];
             pageModel.image = [UIImage imageNamed:@"Background"];
