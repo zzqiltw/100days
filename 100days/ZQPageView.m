@@ -63,8 +63,8 @@
     } completion:^(BOOL finished) {
 //        self.bgImageView.layer.mask = self.shapeLayer;
 
-        self.titleLabel.transform = CGAffineTransformMakeTranslation(-WIDTH_SCREEN, 0);
-        self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN, 0);
+        self.titleLabel.transform = CGAffineTransformMakeTranslation(0, 30);
+        self.detailLabel.transform = CGAffineTransformMakeTranslation(0, 30);
         self.dateView.transform = CGAffineTransformMakeTranslation(0, -30);
         
         
