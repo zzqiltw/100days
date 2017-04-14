@@ -64,7 +64,8 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 {
     ZQImageBrowserViewController *imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
     
-    imageBrowserViewController.pageModel = self.pageModels[indexPath.row];
+    imageBrowserViewController.pageModels = self.pageModels;
+    imageBrowserViewController.currentPageIndex = indexPath.row;
     
     [self presentViewController:imageBrowserViewController animated:YES completion:^{
         

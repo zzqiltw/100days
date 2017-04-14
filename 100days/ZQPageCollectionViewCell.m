@@ -9,24 +9,13 @@
 #import "ZQPageCollectionViewCell.h"
 #import "UIImage+ZQ.h"
 #import "ZQDateView.h"
-#import "UIFont+ZQ.h"
 #import <Masonry/Masonry.h>
 
-//static CGFloat const kZQPageImageViewWH = 140;
-
-#define WIDTH_SCREEN ([UIScreen mainScreen].bounds.size.width)
-#define HEIGHT_SCREEN ([UIScreen mainScreen].bounds.size.height)
+#import "UIFont+ZQ.h"
 
 @interface ZQPageCollectionViewCell()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *detailLabel;
-@property (nonatomic, strong) UIImageView *bgImageView;
-
-//@property (nonatomic, strong) UIImageView *visiableImageView;
-
-@property (nonatomic, strong) ZQDateView *dateView;
-
+@property (nonatomic, strong) ZQPageModel *pageModel;
 
 @end
 
@@ -34,63 +23,84 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super initWithFrame:frame]) {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self bgImageView];
-
+        
+        [self dateView];
+        
         [self titleLabel];
         
         [self detailLabel];
         
-//        [self visiableImageView];
-        
-        [self dateView];
-        
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     }
     return self;
 }
 
 - (void)showAnimation
 {
+    CGFloat duration = 0.6;
+    
+    self.bgImageView.alpha = 0.0f;
+    
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
     self.dateView.alpha = 0.f;
     
-    self.titleLabel.transform = CGAffineTransformMakeTranslation(-WIDTH_SCREEN, 0);
-    self.detailLabel.transform = CGAffineTransformMakeTranslation(WIDTH_SCREEN, 0);
-    
-    CGFloat duration = 0.6;
     
     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.dateView.alpha = 1.f;
+        self.bgImageView.alpha = 1.f;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.titleLabel.alpha = 1.f;
-            self.titleLabel.transform = CGAffineTransformIdentity;
+        //        self.bgImageView.layer.mask = self.shapeLayer;
+        
+        self.titleLabel.transform = CGAffineTransformMakeTranslation(0, 30);
+        self.detailLabel.transform = CGAffineTransformMakeTranslation(0, 30);
+        self.dateView.transform = CGAffineTransformMakeTranslation(0, -30);
+        
+        
+        [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.dateView.transform = CGAffineTransformIdentity;
+            self.dateView.alpha = 1.f;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.detailLabel.alpha = 1.f;
-                self.detailLabel.transform = CGAffineTransformIdentity;
+                self.titleLabel.alpha = 1.f;
+                self.titleLabel.transform = CGAffineTransformIdentity;
             } completion:^(BOOL finished) {
-                
+                [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    self.detailLabel.alpha = 1.f;
+                    self.detailLabel.transform = CGAffineTransformIdentity;
+                } completion:^(BOOL finished) {
+                    
+                }];
             }];
         }];
+        
     }];
+
+}
+
+- (void)layoutUI
+{
+    
 }
 
 - (void)bindData:(ZQPageModel *)pageModel
 {
-    self.titleLabel.text = pageModel.title;
-//    self.detailLabel.text = pageModel.detail;
+    if (pageModel != _pageModel) {
+        _pageModel = pageModel;
+        
+        self.titleLabel.text = pageModel.title;
+        //    self.detailLabel.text = pageModel.detail;
+        
+        self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:pageModel.detail
+                                                                          attributes:[self attributesForLabel:self.detailLabel]];
+        self.bgImageView.image = [pageModel.image stackBlur:10];
+        
+        self.dateView.date = pageModel.date;
+        self.dateView.title = pageModel.title;
+    }
     
-    self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:pageModel.detail
-                                                                      attributes:[self attributesForLabel:self.detailLabel]];
-    self.bgImageView.image = [pageModel.image stackBlur:70];
-//    self.bgImageView.image = pageModel.image;
-//    self.visiableImageView.image = pageModel.image;
-    self.dateView.date = pageModel.date;
-    self.dateView.title = pageModel.title;
+    [self layoutUI];
 }
 
 - (NSDictionary *)attributesForLabel:(UILabel *)label
@@ -109,6 +119,38 @@
     return [attributes copy];
 }
 
+- (UIImageView *)bgImageView
+{
+    if (!_bgImageView) {
+        _bgImageView = [UIImageView new];
+        
+        [self.contentView insertSubview:_bgImageView atIndex:0];
+        
+        [_bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.bottom.offset(0);
+        }];
+    }
+    return _bgImageView;
+}
+
+- (ZQDateView *)dateView
+{
+    if (!_dateView) {
+        _dateView = [[ZQDateView alloc] init];
+        
+        [self.contentView addSubview:_dateView];
+        
+        [_dateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.offset(0);
+            make.centerY.offset(-64);
+            
+            make.width.equalTo(@(0.2*WIDTH_SCREEN));
+            make.height.equalTo(@(0.2*HEIGHT_SCREEN));
+        }];
+    }
+    return _dateView;
+}
+
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
@@ -123,7 +165,7 @@
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.offset(0);
             
-            make.bottom.offset(-80);
+            make.bottom.offset(-160);
         }];
     }
     return _titleLabel;
@@ -145,82 +187,11 @@
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.offset(0);
             
-            make.top.equalTo(self.titleLabel.mas_bottom).offset(10);
+            make.top.equalTo(self.titleLabel.mas_bottom).offset(30);
         }];
     }
     return _detailLabel;
 }
 
-- (UIImageView *)bgImageView
-{
-    if (!_bgImageView) {
-        _bgImageView = [UIImageView new];
-        
-//        CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-//        
-//        CGFloat shortHeight = 0.56 * HEIGHT_SCREEN;
-//        CGFloat longHeight = 0.68 * HEIGHT_SCREEN;
-//        
-//        UIBezierPath *path = [UIBezierPath bezierPath];
-//        [path moveToPoint:CGPointZero];
-//        [path addLineToPoint:CGPointMake(0, longHeight)];
-//        [path addLineToPoint:CGPointMake(WIDTH_SCREEN, shortHeight)];
-//        [path addLineToPoint:CGPointMake(WIDTH_SCREEN, 0)];
-//        [path closePath];
-//        shapeLayer.path = path.CGPath;
-//        
-//        _bgImageView.layer.mask = shapeLayer;
-        
-        [self.contentView insertSubview:_bgImageView atIndex:0];
-        
-        [_bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.top.bottom.offset(0);
-        }];
-    }
-    return _bgImageView;
-}
-//
-//- (UIImageView *)visiableImageView
-//{
-//    if (!_visiableImageView) {
-//        _visiableImageView = [[UIImageView alloc] init];
-//        
-//        _visiableImageView.layer.borderWidth = 2.f;
-//        _visiableImageView.layer.masksToBounds = YES;
-//        _visiableImageView.layer.cornerRadius = kZQPageImageViewWH * 0.5;
-//        _visiableImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-//        
-//        [self.contentView addSubview:_visiableImageView];
-//        
-//        [_visiableImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.offset(100);
-//            
-//            make.centerX.offset(0);
-//            
-//            make.width.height.equalTo(@(kZQPageImageViewWH));
-//        }];
-//    }
-//    return _visiableImageView;
-//}
 
-- (ZQDateView *)dateView
-{
-    if (!_dateView) {
-        _dateView = [[ZQDateView alloc] init];
-        
-        [self.contentView addSubview:_dateView];
-        
-        [_dateView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.offset(0);
-//            make.centerY.offset(0);
-            
-            
-            make.centerY.offset(0);
-            make.right.offset(-10);
-            make.width.equalTo(@(0.2*WIDTH_SCREEN));
-            make.height.equalTo(@(0.2*HEIGHT_SCREEN));
-        }];
-    }
-    return _dateView;
-}
 @end

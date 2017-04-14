@@ -10,10 +10,15 @@
 #import "ZQPageModel.h"
 #import "ZQPageView.h"
 #import <Masonry/Masonry.h>
+#import "ZQPageCollectionViewCell.h"
+#import "ZQSummaryPageCell.h"
+#import "ZQShortPageCell.h"
+#import "ZQDetailPageCell.h"
 
-@interface ZQImageBrowserViewController ()<UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning>
+@interface ZQImageBrowserViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) ZQPageView *pageView;
+//@property (nonatomic, strong) ZQPageView *pageView;
+@property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
@@ -25,101 +30,120 @@
     self.modalTransitionStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
     
-    [self.pageView bindData:self.pageModel];
+//    [self.pageView bindData:self.pageModel];
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.pageView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)]];
+    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)];
+    gesture.delegate = self;
+    [self.collectionView addGestureRecognizer:gesture];
+    
+    [self prepareForCollectionView];
 }
 
-- (void)onPanGesture:(UIGestureRecognizer *)panGesture
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
+    if (velocity.y > 30) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)prepareForCollectionView
+{
+    [self.collectionView registerClass:ZQShortPageCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQShortPageCell.class)];
+    [self.collectionView registerClass:ZQSummaryPageCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQSummaryPageCell.class)];
+    [self.collectionView registerClass:ZQDetailPageCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQDetailPageCell.class)];
+}
+
+- (void)onPanGesture:(UIPanGestureRecognizer *)panGesture
 {
     if (panGesture.state == UIGestureRecognizerStateRecognized) {
-        [self dismissViewControllerAnimated:YES completion:^{
+        
+        
+            [self dismissViewControllerAnimated:YES completion:^{
             
-        }];
-    }
-}
-
-- (ZQPageView *)pageView
-{
-    if (!_pageView) {
-        _pageView = [[ZQPageView alloc] init];
-        
-        [self.view addSubview:_pageView];
-        
-        [_pageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.top.bottom.offset(0);
-        }];
-    }
-    return _pageView;
-}
-
-//- (void)setCurrentPageIndex:(NSInteger)currentPageIndex
-//{
-//    if (_currentPageIndex != currentPageIndex) {
-//        _currentPageIndex = currentPageIndex;
-//        
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
-//        
-//        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//    }
-//}
-
-//- (UICollectionView *)collectionView
-//{
-//    if (!_collectionView) {
-//        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-//        flowLayout.minimumLineSpacing = 0;
-//        flowLayout.minimumInteritemSpacing = 0;
-//        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-//        
-//        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-//        _collectionView.bounces = NO;
-//        _collectionView.pagingEnabled = YES;
-//        _collectionView.delegate = self;
-//        _collectionView.dataSource = self;
-//        [self.view addSubview:_collectionView];
-//        
-//        [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.bottom.top.offset(0);
-//        }];
-//    }
-//    return _collectionView;
-//}
-
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-//{
-//    return self.pageModels.count;
-//}
-//
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return CGSizeMake([UIScreen mainScreen].bounds.size.width, collectionView.bounds.size.height);
-//}
-
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    ZQPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(ZQPageCollectionViewCell.class) forIndexPath:indexPath];
-// 
-//    if (indexPath.row < self.pageModels.count) {
-//        [cell bindData:self.pageModels[indexPath.row]];
-//    }
-//    
-//    return cell;
-//}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+            }];
+        }
     
-    [self.pageView showAnimation];
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [(ZQPageCollectionViewCell *)cell showAnimation];
-//}
+- (void)setCurrentPageIndex:(NSInteger)currentPageIndex
+{
+    if (_currentPageIndex != currentPageIndex) {
+        _currentPageIndex = currentPageIndex;
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
+        
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    }
+}
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.minimumLineSpacing = 0;
+        flowLayout.minimumInteritemSpacing = 0;
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _collectionView.bounces = NO;
+        _collectionView.pagingEnabled = YES;
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [self.view addSubview:_collectionView];
+        
+        [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.top.offset(0);
+        }];
+    }
+    return _collectionView;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.pageModels.count;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake([UIScreen mainScreen].bounds.size.width, collectionView.bounds.size.height);
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZQPageModel *pageModel = self.pageModels[indexPath.row];
+    NSString *identifier = @"";
+    switch (pageModel.type) {
+        case ZQPageModelTypeDetail:
+            identifier = NSStringFromClass(ZQDetailPageCell.class);
+            break;
+        case ZQPageModelTypeSummary:
+            identifier = NSStringFromClass(ZQSummaryPageCell.class);
+            break;
+        case ZQPageModelTypeVeryShort:
+            identifier = NSStringFromClass(ZQShortPageCell.class);
+            break;
+        default:
+            break;
+    }
+    
+    ZQPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+ 
+    if (indexPath.row < self.pageModels.count) {
+        [cell bindData:pageModel];
+    }
+    
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [(ZQPageCollectionViewCell *)cell showAnimation];
+}
 
 #pragma mark - 转场
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ZQPageModelType) {
+    ZQPageModelTypeVeryShort,
+    ZQPageModelTypeSummary,
+    ZQPageModelTypeDetail,
+};
+
 @interface ZQPageModel : NSObject
 
 @property (nonatomic, strong) NSDate *date;
@@ -15,5 +21,7 @@
 @property (nonatomic, copy) NSString *detail;
 
 @property (nonatomic, strong) UIImage *image;
+
+@property (nonatomic, assign) ZQPageModelType type;
 
 @end

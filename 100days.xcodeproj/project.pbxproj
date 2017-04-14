@@ -13,6 +13,9 @@
 		9958C66D1E8D470E00F1F04E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9958C66C1E8D470E00F1F04E /* Assets.xcassets */; };
 		9958C67B1E8D470E00F1F04E /* _00daysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9958C67A1E8D470E00F1F04E /* _00daysTests.m */; };
 		9958C6861E8D470F00F1F04E /* _00daysUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9958C6851E8D470F00F1F04E /* _00daysUITests.m */; };
+		9969C28C1EA0B35B00A99362 /* ZQSummaryPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969C28B1EA0B35B00A99362 /* ZQSummaryPageCell.m */; };
+		9969C28F1EA0B6CC00A99362 /* ZQShortPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969C28E1EA0B6CC00A99362 /* ZQShortPageCell.m */; };
+		9969C2921EA0B6E000A99362 /* ZQDetailPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969C2911EA0B6E000A99362 /* ZQDetailPageCell.m */; };
 		996C568B1E9499500006EA05 /* ZQPageDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C568A1E9499500006EA05 /* ZQPageDataSet.m */; };
 		996C568E1E94BDF00006EA05 /* ZQPageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 996C568D1E94BDF00006EA05 /* ZQPageListViewController.m */; };
 		99A700591E961D440065FBFE /* ZQDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A700581E961D440065FBFE /* ZQDateView.m */; };
@@ -59,6 +62,12 @@
 		9958C6811E8D470F00F1F04E /* 100daysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 100daysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9958C6851E8D470F00F1F04E /* _00daysUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _00daysUITests.m; sourceTree = "<group>"; };
 		9958C6871E8D470F00F1F04E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9969C28A1EA0B35B00A99362 /* ZQSummaryPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQSummaryPageCell.h; sourceTree = "<group>"; };
+		9969C28B1EA0B35B00A99362 /* ZQSummaryPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQSummaryPageCell.m; sourceTree = "<group>"; };
+		9969C28D1EA0B6CC00A99362 /* ZQShortPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQShortPageCell.h; sourceTree = "<group>"; };
+		9969C28E1EA0B6CC00A99362 /* ZQShortPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQShortPageCell.m; sourceTree = "<group>"; };
+		9969C2901EA0B6E000A99362 /* ZQDetailPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQDetailPageCell.h; sourceTree = "<group>"; };
+		9969C2911EA0B6E000A99362 /* ZQDetailPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQDetailPageCell.m; sourceTree = "<group>"; };
 		996C56891E9499500006EA05 /* ZQPageDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageDataSet.h; sourceTree = "<group>"; };
 		996C568A1E9499500006EA05 /* ZQPageDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQPageDataSet.m; sourceTree = "<group>"; };
 		996C568C1E94BDF00006EA05 /* ZQPageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQPageListViewController.h; sourceTree = "<group>"; };
@@ -164,6 +173,12 @@
 				99AD33A41E8E4DF100044B3B /* ZQPageModel.m */,
 				99AD33A91E8E5E7C00044B3B /* ZQPageCollectionViewCell.h */,
 				99AD33AA1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m */,
+				9969C28A1EA0B35B00A99362 /* ZQSummaryPageCell.h */,
+				9969C28B1EA0B35B00A99362 /* ZQSummaryPageCell.m */,
+				9969C28D1EA0B6CC00A99362 /* ZQShortPageCell.h */,
+				9969C28E1EA0B6CC00A99362 /* ZQShortPageCell.m */,
+				9969C2901EA0B6E000A99362 /* ZQDetailPageCell.h */,
+				9969C2911EA0B6E000A99362 /* ZQDetailPageCell.m */,
 				99A700671E966B000065FBFE /* ZQPageView.h */,
 				99A700681E966B000065FBFE /* ZQPageView.m */,
 				99A700571E961D440065FBFE /* ZQDateView.h */,
@@ -395,13 +410,16 @@
 			files = (
 				996C568E1E94BDF00006EA05 /* ZQPageListViewController.m in Sources */,
 				99AD33AE1E8E6A6900044B3B /* UIImage+ZQ.m in Sources */,
+				9969C28C1EA0B35B00A99362 /* ZQSummaryPageCell.m in Sources */,
 				996C568B1E9499500006EA05 /* ZQPageDataSet.m in Sources */,
 				9958C6651E8D470E00F1F04E /* AppDelegate.m in Sources */,
 				9958C6621E8D470E00F1F04E /* main.m in Sources */,
 				99AD33A51E8E4DF100044B3B /* ZQPageModel.m in Sources */,
 				99A700691E966B000065FBFE /* ZQPageView.m in Sources */,
+				9969C28F1EA0B6CC00A99362 /* ZQShortPageCell.m in Sources */,
 				99AD33AB1E8E5E7C00044B3B /* ZQPageCollectionViewCell.m in Sources */,
 				99A700641E965E8A0065FBFE /* UIFont+ZQ.m in Sources */,
+				9969C2921EA0B6E000A99362 /* ZQDetailPageCell.m in Sources */,
 				99A7005F1E9622D70065FBFE /* NSDate+ZQ.m in Sources */,
 				99A700591E961D440065FBFE /* ZQDateView.m in Sources */,
 				99AD33A81E8E51CE00044B3B /* ZQImageBrowserViewController.m in Sources */,
