@@ -72,8 +72,11 @@
 //    if (_currentPageIndex != currentPageIndex) {
         _currentPageIndex = currentPageIndex;
         
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:currentPageIndex inSection:0];
-    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:currentPageIndex inSection:0];
+//    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    
+    CGPoint offset = CGPointMake(_currentPageIndex * WIDTH_SCREEN, 0);
+    [self.collectionView setContentOffset:offset animated:NO];
 //    }
 }
 

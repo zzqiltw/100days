@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, ZQPageModelType) {
 
 @interface ZQPageModel : NSObject
 
-+ (instancetype)pageModelWithDate:(NSDate *)date title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type;
++ (instancetype)pageModelWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type;
 
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, copy) NSString *title;

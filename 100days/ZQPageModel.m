@@ -8,7 +8,18 @@
 
 #import "ZQPageModel.h"
 
+
 @implementation ZQPageModel
+
+static inline NSDateFormatter *ZQSharedDateFormatter(NSString *dateFormat) {
+    static dispatch_once_t onceToken;
+    static NSDateFormatter *formatter = nil;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+    });
+    formatter.dateFormat = dateFormat;
+    return formatter;
+}
 
 static inline NSString * ZQVerticalString(NSString *originalString) {
     NSMutableString *str = [NSMutableString string];
@@ -28,11 +39,18 @@ static inline NSString * ZQVerticalString(NSString *originalString) {
     return [str copy];
 }
 
-+ (instancetype)pageModelWithDate:(NSDate *)date title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type
++ (instancetype)pageModelWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type
 {
     ZQPageModel *model = [[self alloc] init];
     
+    NSString *dateString = [NSString stringWithFormat:@"%ld-%ld-%ld", year, month, day];
     
+    model.date = [ZQSharedDateFormatter(@"yyyy-MM-dd") dateFromString:dateString];
+    model.title = title;
+    model.detail = detail;
+    model.image = image;
+    
+    model.type = type;
     
     return model;
 }
