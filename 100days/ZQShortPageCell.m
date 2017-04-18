@@ -74,7 +74,7 @@
 {
     CGFloat duration = 0.6;
     
-    self.bgImageView.alpha = 0.0f;
+//    self.bgImageView.alpha = 0.0f;
     
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
@@ -96,7 +96,6 @@
             //        self.bgImageView.layer.mask = self.shapeLayer;
             
             [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                
                 self.lineView.alpha = 1.f;
                 self.lineView.transform = CGAffineTransformIdentity;
                 

@@ -80,11 +80,18 @@
 //    }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
+    
     self.currentPageIndex = self.currentPageIndex;
+
 }
 
 - (UICollectionView *)collectionView
@@ -149,7 +156,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [(ZQPageCollectionViewCell *)cell showAnimation];
+    [(ZQPageCollectionViewCell *)cell hideSubviewForAnimation];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.61 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [(ZQPageCollectionViewCell *)cell showSubviewAfterAnimation];
+        [(ZQPageCollectionViewCell *)cell showAnimation];
+    });
 }
 
 #pragma mark - 转场

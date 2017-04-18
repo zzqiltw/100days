@@ -21,6 +21,8 @@
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UIView *lineView;
 
+- (void)showSubviewAfterAnimation;
+- (void)hideSubviewForAnimation;
 
 - (void)bindData:(ZQPageModel *)pageModel;
 
@@ -29,4 +31,5 @@
 // override
 - (NSDictionary *)attributesForLabel:(UILabel *)label;
 - (void)layoutUI;
+
 @end

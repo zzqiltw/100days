@@ -38,11 +38,27 @@
     return self;
 }
 
+- (void)hideSubviewForAnimation
+{
+    self.dateView.hidden = YES;
+    self.titleLabel.hidden = YES;
+    self.detailLabel.hidden = YES;
+    self.lineView.hidden = YES;
+}
+
+- (void)showSubviewAfterAnimation
+{
+    self.dateView.hidden = NO;
+    self.titleLabel.hidden = NO;
+    self.detailLabel.hidden = NO;
+    self.lineView.hidden = NO;
+}
+
 - (void)showAnimation
 {
     CGFloat duration = 0.6;
     
-    self.bgImageView.alpha = 0.0f;
+//    self.bgImageView.alpha = 0.0f;
     
     self.titleLabel.alpha = 0.f;
     self.detailLabel.alpha = 0.f;
