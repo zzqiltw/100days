@@ -11,4 +11,5 @@ target '100days' do
     pod 'pop', '~> 1.0.9'
     pod 'Masonry', '~> 1.0'
     pod 'TSMessages'
+    pod 'CHTCollectionViewWaterfallLayout'
 end

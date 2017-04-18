@@ -9,12 +9,16 @@
 #import "ZQPageListViewController.h"
 
 #import "ZQImageBrowserViewController.h"
+#import <CHTCollectionViewWaterfallLayout/CHTCollectionViewWaterfallLayout.h>
+#import "ZQPageWaterFallCollectionViewCell.h"
 
 static NSString * const kZQPageListCellIdentifier = @"cell";
 
-@interface ZQPageListViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ZQPageListViewController ()<CHTCollectionViewDelegateWaterfallLayout, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong) UITableView *listTableView;
+//@property (nonatomic, strong) UITableView *listTableView;
+@property (nonatomic, strong) UICollectionView *collectionView;
+
 @property (nonatomic, strong) ZQImageBrowserViewController *imageBrowserViewController;
 
 @end
@@ -24,46 +28,32 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.listTableView registerClass:UITableViewCell.class forCellReuseIdentifier:kZQPageListCellIdentifier];
-    
-//    NSArray * fontArrays = [[UIFont familyNames] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-//        NSString *str1 = (NSString *)obj1;
-//        NSString *str2 = (NSString *)obj2;
-//        return [str1 compare:str2];
-//    }];
-//    for(NSString *fontfamilyname in fontArrays)
-//    {
-//        NSLog(@"family:'%@'",fontfamilyname);
-//        for(NSString *fontName in [UIFont fontNamesForFamilyName:fontfamilyname])
-//        {
-//            NSLog(@"\tfont:'%@'",fontName);
-//        }
-//        NSLog(@"-------------");
-//    }
+    [self.collectionView registerClass:ZQPageWaterFallCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQPageWaterFallCollectionViewCell.class)];
     
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.pageModels.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kZQPageListCellIdentifier];
-    
-    ZQPageModel *pageModel = self.pageModels[indexPath.row];
-    
-    cell.textLabel.text = pageModel.title;
-    cell.detailTextLabel.text = pageModel.detail;
-    cell.imageView.image = pageModel.image;
-    
+    ZQPageWaterFallCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(ZQPageWaterFallCollectionViewCell.class) forIndexPath:indexPath];
+    cell.pageModel = self.pageModels[indexPath.item];
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZQPageModel *pageModel = self.pageModels[indexPath.item];
+    
+    return pageModel.thumnailImage.size;
+}
+
+- (void)openBrowserForIndexPath:(NSIndexPath *)indexPath
 {
     ZQImageBrowserViewController *imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
     
@@ -75,17 +65,18 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
     }];
 }
 
-- (UITableView *)listTableView
+- (UICollectionView *)collectionView
 {
-    if (!_listTableView) {
-        _listTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    if (!_collectionView) {
+        CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
         
-        _listTableView.delegate = self;
-        _listTableView.dataSource = self;
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
         
-        [self.view addSubview:_listTableView];
+        [self.view addSubview:_collectionView];
     }
-    return _listTableView;
+    return _collectionView;
 }
 
 @end

@@ -39,7 +39,7 @@ static inline NSString * ZQVerticalString(NSString *originalString) {
     return [str copy];
 }
 
-+ (instancetype)pageModelWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type
++ (instancetype)pageModelWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type blur:(int)blur
 {
     ZQPageModel *model = [[self alloc] init];
     
@@ -49,10 +49,30 @@ static inline NSString * ZQVerticalString(NSString *originalString) {
     model.title = title;
     model.detail = detail;
     model.image = image;
-    
+    model.blur = blur;
     model.type = type;
     
     return model;
+}
+
+- (UIImage *)thumnailImage
+{
+    if (!_thumnailImage) {
+        CGSize bigSize = self.image.size;
+        CGFloat ratio = 0.1;
+        CGSize size = CGSizeMake(bigSize.width * ratio, bigSize.height * ratio);
+
+        UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+        [self.image drawInRect:(CGRect){{0, 0}, size}];
+        _thumnailImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    return _thumnailImage;
+}
+
+- (NSString *)dateString
+{
+    return [ZQSharedDateFormatter(@"yyyy.MM.dd") stringFromDate:self.date];
 }
 
 - (NSString *)verticalTitle

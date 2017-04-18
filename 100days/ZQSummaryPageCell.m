@@ -52,9 +52,6 @@
         make.height.mas_equalTo(1.f / [UIScreen mainScreen].scale);
     }];
     
-    
-
-    
     [self.dateView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(20);
         make.top.offset(44);
@@ -63,8 +60,5 @@
     }];
     
 }
-
-
-
 
 @end

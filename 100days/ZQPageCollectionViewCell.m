@@ -118,10 +118,10 @@
         
         self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:pageModel.detail
                                                                           attributes:[self attributesForLabel:self.detailLabel]];
-        self.bgImageView.image = [pageModel.image stackBlur:10];
+        self.bgImageView.image = [pageModel.image stackBlur:pageModel.blur == 0 ? 10 : pageModel.blur];
         
         self.dateView.date = pageModel.date;
-        self.dateView.title = pageModel.title;
+        self.dateView.title = @"我们的日子";
     }
     
     [self layoutUI];
@@ -180,7 +180,7 @@
     if (!_titleLabel) {
         _titleLabel = [UILabel new];
         
-        _titleLabel.font = [UIFont defaultFontWithSize:15];
+        _titleLabel.font = [UIFont defaultFontWithSize:18];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         
