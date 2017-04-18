@@ -61,24 +61,27 @@
 - (void)onPanGesture:(UIPanGestureRecognizer *)panGesture
 {
     if (panGesture.state == UIGestureRecognizerStateRecognized) {
+        [self dismissViewControllerAnimated:YES completion:^{
         
-        
-            [self dismissViewControllerAnimated:YES completion:^{
-            
-            }];
-        }
-    
+        }];
+    }
 }
 
 - (void)setCurrentPageIndex:(NSInteger)currentPageIndex
 {
-    if (_currentPageIndex != currentPageIndex) {
+//    if (_currentPageIndex != currentPageIndex) {
         _currentPageIndex = currentPageIndex;
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_currentPageIndex inSection:0];
-        
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:currentPageIndex inSection:0];
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+//    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.currentPageIndex = self.currentPageIndex;
 }
 
 - (UICollectionView *)collectionView
@@ -115,7 +118,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZQPageModel *pageModel = self.pageModels[indexPath.row];
+    ZQPageModel *pageModel = self.pageModels[indexPath.item];
     NSString *identifier = @"";
     switch (pageModel.type) {
         case ZQPageModelTypeDetail:
@@ -133,8 +136,9 @@
     
     ZQPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
  
-    if (indexPath.row < self.pageModels.count) {
+    if (indexPath.item < self.pageModels.count) {
         [cell bindData:pageModel];
+        
     }
     
     return cell;

@@ -11,10 +11,12 @@
 typedef NS_ENUM(NSInteger, ZQPageModelType) {
     ZQPageModelTypeVeryShort,
     ZQPageModelTypeSummary,
-    ZQPageModelTypeDetail,
+    ZQPageModelTypeDetail
 };
 
 @interface ZQPageModel : NSObject
+
++ (instancetype)pageModelWithDate:(NSDate *)date title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image type:(ZQPageModelType)type;
 
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, copy) NSString *title;
@@ -23,5 +25,8 @@ typedef NS_ENUM(NSInteger, ZQPageModelType) {
 @property (nonatomic, strong) UIImage *image;
 
 @property (nonatomic, assign) ZQPageModelType type;
+
+@property (nonatomic, strong) NSString *verticalTitle;
+@property (nonatomic, strong) NSString *verticalDetail;
 
 @end

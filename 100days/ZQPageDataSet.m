@@ -30,19 +30,7 @@
 {
     if (!_pageModels) {
         
-        NSMutableArray *tmp = [NSMutableArray array];
-        for (NSInteger i = 0; i < 10; ++i) {
-            ZQPageModel *pageModel = [ZQPageModel new];
-            
-            pageModel.date = [NSDate date];
-            pageModel.title = @"我们的日子";
-            pageModel.detail = @"渴望之物的来临,\n总是在我们停止渴求它们之后";
-            pageModel.image = [UIImage imageNamed:@"Background"];
-            pageModel.type = i % 3;
-            [tmp addObject:pageModel];
-        }
-        
-        _pageModels = [tmp copy];
+        ZQPageModel *model1 = [ZQPageModel];
     }
     return _pageModels;
 }

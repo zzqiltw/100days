@@ -7,7 +7,7 @@
 //
 
 #import "ZQDetailPageCell.h"
-
+#import <Masonry/Masonry.h>
 @interface ZQDetailPageCell()
 
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
@@ -22,6 +22,8 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         self.bgImageView.layer.mask = self.shapeLayer;
+        
+        self.lineView.hidden = NO;
     }
     return self;
 }
@@ -45,6 +47,30 @@
         _shapeLayer = shapeLayer;
     }
     return _shapeLayer;
+}
+
+- (void)layoutUI
+{
+    [super layoutUI];
+    
+    self.titleLabel.textColor = [UIColor blackColor];
+    self.detailLabel.textColor = [UIColor blackColor];
+    
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.offset(0);
+        make.bottom.offset(-160);
+    }];
+    
+    self.detailLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.lineView.backgroundColor = [UIColor blackColor];
+    [self.lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.offset(0);
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(15);
+        make.width.equalTo(@14);
+        make.height.mas_equalTo(2.f / [UIScreen mainScreen].scale);
+    }];
 }
 
 @end

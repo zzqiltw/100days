@@ -40,6 +40,9 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 //        }
 //        NSLog(@"-------------");
 //    }
+    
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -19,6 +19,7 @@
 @property (nonatomic, strong) ZQDateView *dateView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *detailLabel;
+@property (nonatomic, strong) UIView *lineView;
 
 
 - (void)bindData:(ZQPageModel *)pageModel;

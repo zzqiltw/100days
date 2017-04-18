@@ -33,6 +33,7 @@
         
         [self detailLabel];
         
+        [self lineView];
     }
     return self;
 }
@@ -47,36 +48,43 @@
     self.detailLabel.alpha = 0.f;
     self.dateView.alpha = 0.f;
     
+    self.titleLabel.transform = CGAffineTransformMakeTranslation(-10, 0);
+    self.detailLabel.transform = CGAffineTransformMakeTranslation(-10, 0);
+    self.dateView.transform = CGAffineTransformMakeTranslation(0, -30);
     
-    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.lineView.alpha = 0.f;
+    self.lineView.transform = CGAffineTransformMakeScale(0.1, 1);
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.bgImageView.alpha = 1.f;
     } completion:^(BOOL finished) {
-        //        self.bgImageView.layer.mask = self.shapeLayer;
-        
-        self.titleLabel.transform = CGAffineTransformMakeTranslation(0, 30);
-        self.detailLabel.transform = CGAffineTransformMakeTranslation(0, 30);
-        self.dateView.transform = CGAffineTransformMakeTranslation(0, -30);
-        
-        
         [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.dateView.transform = CGAffineTransformIdentity;
             self.dateView.alpha = 1.f;
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.titleLabel.alpha = 1.f;
-                self.titleLabel.transform = CGAffineTransformIdentity;
+            //        self.bgImageView.layer.mask = self.shapeLayer;
+
+            [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                
+                self.lineView.alpha = 1.f;
+                self.lineView.transform = CGAffineTransformIdentity;
+
             } completion:^(BOOL finished) {
                 [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                    self.detailLabel.alpha = 1.f;
-                    self.detailLabel.transform = CGAffineTransformIdentity;
+                    self.titleLabel.alpha = 1.f;
+                    self.titleLabel.transform = CGAffineTransformIdentity;
                 } completion:^(BOOL finished) {
-                    
+                    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                        self.detailLabel.alpha = 1.f;
+                        self.detailLabel.transform = CGAffineTransformIdentity;
+                    } completion:^(BOOL finished) {
+                        
+                    }];
                 }];
             }];
+            
         }];
-        
-    }];
 
+    }];
 }
 
 - (void)layoutUI
@@ -112,7 +120,7 @@
     
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineSpacing = 6;
-    style.alignment = NSTextAlignmentCenter;
+    style.alignment = label.textAlignment ? : NSTextAlignmentLeft;
     
     attributes[NSParagraphStyleAttributeName] = style;
     
@@ -144,8 +152,8 @@
             make.centerX.offset(0);
             make.centerY.offset(-64);
             
-            make.width.equalTo(@(0.2*WIDTH_SCREEN));
-            make.height.equalTo(@(0.2*HEIGHT_SCREEN));
+            make.height.mas_equalTo(0.18 * HEIGHT_SCREEN);
+            make.width.equalTo(self.dateView.mas_height).multipliedBy(0.5);
         }];
     }
     return _dateView;
@@ -158,13 +166,13 @@
         
         _titleLabel.font = [UIFont defaultFontWithSize:15];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.textAlignment = NSTextAlignmentLeft;
         
         [self.contentView addSubview:_titleLabel];
         
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.offset(0);
-            
+
+            make.left.equalTo(self.lineView);
             make.bottom.offset(-160);
         }];
     }
@@ -176,8 +184,8 @@
     if (!_detailLabel) {
         _detailLabel = [UILabel new];
         
-        _detailLabel.font = [UIFont defaultFontWithSize:16];
-        _detailLabel.textAlignment = NSTextAlignmentCenter;
+        _detailLabel.font = [UIFont defaultFontWithSize:13];
+        _detailLabel.textAlignment = NSTextAlignmentLeft;
         _detailLabel.textColor = [UIColor whiteColor];
         
         _detailLabel.numberOfLines = 0;
@@ -193,5 +201,22 @@
     return _detailLabel;
 }
 
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
+        
+        _lineView.backgroundColor = [UIColor whiteColor];
+        
+        [self.contentView addSubview:_lineView];
+        
+        [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@1.f);
+            make.width.equalTo(self.titleLabel.mas_width);
+            make.left.offset(30);
+        }];
+    }
+    return _lineView;
+}
 
 @end

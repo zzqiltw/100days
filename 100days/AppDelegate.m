@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ZQPageListViewController.h"
+#import "ZQImageBrowserViewController.h"
 #import "ZQPageDataSet.h"
 
 @interface AppDelegate ()
