@@ -326,6 +326,7 @@
 				TargetAttributes = {
 					9958C65C1E8D470E00F1F04E = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = W6N382B5V9;
 						ProvisioningStyle = Automatic;
 					};
 					9958C6751E8D470E00F1F04E = {
@@ -597,6 +598,7 @@
 			baseConfigurationReference = 14BA1F53CFDE42A27D5A9CD6 /* Pods-100days.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = W6N382B5V9;
 				INFOPLIST_FILE = 100days/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zzqiltw.daisy.-00days";
@@ -609,6 +611,7 @@
 			baseConfigurationReference = 6CF626C51C26D21EF5D2B999 /* Pods-100days.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = W6N382B5V9;
 				INFOPLIST_FILE = 100days/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zzqiltw.daisy.-00days";

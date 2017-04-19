@@ -30,7 +30,7 @@
     self.modalTransitionStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
     
-//    [self.pageView bindData:self.pageModel];
+
 
     self.view.backgroundColor = [UIColor whiteColor];
     

@@ -25,6 +25,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         [self bgImageView];
         
         [self dateView];
@@ -40,6 +41,7 @@
 
 - (void)hideSubviewForAnimation
 {
+    self.bgImageView.hidden = YES;
     self.dateView.hidden = YES;
     self.titleLabel.hidden = YES;
     self.detailLabel.hidden = YES;
@@ -48,6 +50,7 @@
 
 - (void)showSubviewAfterAnimation
 {
+    self.bgImageView.hidden = NO;
     self.dateView.hidden = NO;
     self.titleLabel.hidden = NO;
     self.detailLabel.hidden = NO;
@@ -148,6 +151,7 @@
     if (!_bgImageView) {
         _bgImageView = [UIImageView new];
         
+        _bgImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView insertSubview:_bgImageView atIndex:0];
         
         [_bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {

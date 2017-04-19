@@ -28,11 +28,21 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self.collectionView registerClass:ZQPageWaterFallCollectionViewCell.class forCellWithReuseIdentifier:NSStringFromClass(ZQPageWaterFallCollectionViewCell.class)];
     
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.title = @"我们的日子";
+
+//    
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 }
+
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;
+//}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -53,6 +63,11 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
     return pageModel.thumnailImage.size;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self openBrowserForIndexPath:indexPath];
+}
+
 - (void)openBrowserForIndexPath:(NSIndexPath *)indexPath
 {
     ZQImageBrowserViewController *imageBrowserViewController = [[ZQImageBrowserViewController alloc] init];
@@ -71,6 +86,7 @@ static NSString * const kZQPageListCellIdentifier = @"cell";
         CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         

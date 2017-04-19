@@ -55,6 +55,8 @@
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] init];
         
+        _dateLabel.textAlignment = NSTextAlignmentCenter;
+        
         _dateLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
         _dateLabel.font = [UIFont defaultFontWithSize:15];
         _dateLabel.textColor = [UIColor whiteColor];
